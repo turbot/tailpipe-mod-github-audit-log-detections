@@ -19,10 +19,10 @@ query "github_delete_action_table" {
       --tp_source_ip as source_ip_address,
       action as operation,
       case
-        when action = 'codespaces.destroy' then repo -- TODO: What column to show?
-        when action = 'environment.delete' then environment_name
-        when action = 'project.delete' then project_name
-        when action = 'repo.destroy' then repo
+        when action = 'codespaces.destroy' then array_value(repo)::JSON -- TODO: What column to show?
+        when action = 'environment.delete' then array_value(environment_name)::JSON
+        when action = 'project.delete' then array_value(project_name)::JSON
+        when action = 'repo.destroy' then array_value(repo)::JSON
       end as resources,
       repo as index, -- TODO: Would tp_index have this info?
       tp_id as tp_log_id,
