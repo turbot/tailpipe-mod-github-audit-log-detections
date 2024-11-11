@@ -6,6 +6,7 @@ mod "github" {
   #documentation = file("./docs/index.md")
   #icon          = "/images/mods/turbot/github.svg"
   categories    = ["github", "security"]
+  database      = var.database
 
   opengraph {
     title       = "Tailpipe Mod for GitHub"

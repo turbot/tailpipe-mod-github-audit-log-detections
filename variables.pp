@@ -11,3 +11,9 @@ locals {
   tp_id as source_id,
   EOQ
 }
+
+variable "database" {
+  type        = connection.tailpipe
+  description = "Tailpipe database connection string."
+  default     = connection.tailpipe.default
+}
