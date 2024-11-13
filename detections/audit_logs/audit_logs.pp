@@ -13,7 +13,7 @@ locals {
 
   audit_logs_organization_add_application_integration_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
 
-  audit_logs_organization_add_user_org_moderator_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
+  audit_logs_organization_add_user_org_moderator_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', additional_fields::JSON ->> 'user')")
 
   audit_logs_organization_add_remove_user_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
 
@@ -421,7 +421,7 @@ query "detect_audit_logs_with_repository_create_events" {
     from
       github_audit_log
     where
-      action in ('repo.add_member', 'repo.remove_member')
+      action = 'repo.create'
     order by
       tp_timestamp desc
     limit 20;
