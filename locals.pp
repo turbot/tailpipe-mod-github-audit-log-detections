@@ -6,3 +6,19 @@ locals {
     service  = "GitHub"
   }
 }
+
+locals {
+  # Local internal variables to build the SQL select clause for common
+  # dimensions. Do not edit directly.
+  common_dimensions_audit_logs_sql = <<-EOQ
+  tp_timestamp as timestamp,
+  action as operation,
+  __RESOURCE_SQL__ as resource,
+  actor as actor,
+  tp_source_ip as source_ip,
+  tp_index::varchar as org,
+  tp_id as source_id,
+  *
+  EOQ
+
+}
