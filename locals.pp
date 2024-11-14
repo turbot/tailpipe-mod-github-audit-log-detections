@@ -10,7 +10,7 @@ locals {
 locals {
   # Local internal variables to build the SQL select clause for common
   # dimensions. Do not edit directly.
-  common_dimensions_audit_logs_sql = <<-EOQ
+  common_dimensions_audit_logs_sql_columns = <<-EOQ
   tp_timestamp as timestamp,
   action as operation,
   __RESOURCE_SQL__ as resource,

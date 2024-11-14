@@ -12,8 +12,8 @@
 
 # locals {
 #   # Store the replace logic in a local variable
-#   github_delete_action_table_sql = replace(
-#     local.common_dimensions_audit_log_sql,
+#   github_delete_action_table_sql_columns = replace(
+#     local.common_dimensions_audit_log_sql_columns,
 #     "__RESOURCE_SQL__",
 #     <<-EOT
 #       case
@@ -29,7 +29,7 @@
 # query "github_delete_action_table" {
 #   sql = <<-EOQ
 #     select
-#       ${local.github_delete_action_table_sql}
+#       ${local.github_delete_action_table_sql_columns}
 #       -- Additional dimensions
 #     from
 #       github_audit_log

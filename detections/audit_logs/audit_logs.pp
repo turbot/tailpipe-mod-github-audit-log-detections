@@ -1,33 +1,31 @@
-// TODO: Verify the resource column for the queries
-
 locals {
-  audit_logs_action_failed_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "org")
+  audit_logs_detect_failed_workflow_actions_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "org")
 
-  audit_logs_branch_protection_policy_override_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/commit/', json_extract_string(additional_fields, '$.after'))")
+  audit_logs_detect_branch_protection_policy_overrides_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/commit/', json_extract_string(additional_fields, '$.after'))")
 
-  audit_logs_branch_protection_disabled_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'))")
+  audit_logs_detect_branch_protection_disabled_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'))")
 
-  audit_logs_organization_authentication_method_update_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org, '/settings/authentication')")
+  audit_logs_detect_organization_authentication_method_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org, '/settings/authentication')")
 
-  audit_logs_organization_ip_allow_list_modified_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
+  audit_logs_detect_organization_allowed_ip_list_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
 
-  audit_logs_organization_add_application_integration_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
+  audit_logs_detect_organization_application_integration_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
 
-  audit_logs_organization_add_user_org_moderator_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', additional_fields::JSON ->> 'user')")
+  audit_logs_detect_organization_moderator_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', additional_fields::JSON ->> 'user')")
 
-  audit_logs_organization_add_remove_user_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
+  audit_logs_detect_organization_user_access_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
 
-  detect_audit_logs_with_public_repository_create_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  detect_audit_logs_with_public_repository_create_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  detect_audit_logs_with_repository_archive_events_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  audit_logs_detect_repository_archive_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  detect_audit_logs_with_repository_collaborator_update_events_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  audit_logs_detect_repository_collaborator_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  detect_audit_logs_with_repository_create_events_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  audit_logs_detect_repository_create_events_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  detect_audit_logs_with_repository_visibility_change_events_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  audit_logs_detect_repository_visibility_changes_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  detect_audit_logs_with_repository_vulnerability_dismissed_events_sql = replace(local.common_dimensions_audit_logs_sql, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/security/dependabot/', json_extract_string(additional_fields, '$.alert_number'))")
+  audit_logs_detect_dismissed_repository_vulnerabilities_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/security/dependabot/', json_extract_string(additional_fields, '$.alert_number'))")
 }
 
 detection_benchmark "audit_log_detections" {
@@ -35,21 +33,20 @@ detection_benchmark "audit_log_detections" {
   description = "This detection benchmark contains recommendations when scanning Audit logs."
   type        = "detection"
   children = [
-    detection.audit_logs_action_failed,
-    detection.audit_logs_branch_protection_policy_override,
-    detection.audit_logs_branch_protection_disabled,
-    detection.audit_logs_organization_authentication_method_update,
-    detection.audit_logs_organization_ip_allow_list_modified,
-    detection.audit_logs_organization_add_user_org_moderator,
-    detection.audit_logs_organization_add_remove_user,
-    detection.audit_logs_organization_add_application_integration,
-    detection.detect_audit_logs_with_public_repository_create_events,
-    detection.detect_audit_logs_with_repository_archive_events,
-    detection.detect_audit_logs_with_repository_collaborator_update_events,
-    detection.detect_audit_logs_with_repository_create_events,
-    # detection.detect_audit_logs_with_initial_private_repo_access,
-    detection.detect_audit_logs_with_repository_visibility_change_events,
-    detection.detect_audit_logs_with_repository_vulnerability_dismissed_events,
+    detection.audit_logs_detect_failed_workflow_actions,
+    detection.audit_logs_detect_branch_protection_policy_overrides,
+    detection.audit_logs_detect_branch_protection_disabled_updates,
+    detection.audit_logs_detect_organization_authentication_method_updates,
+    detection.audit_logs_detect_organization_allowed_ip_list_updates,
+    detection.audit_logs_detect_organization_moderator_updates,
+    detection.audit_logs_detect_organization_user_access_updates,
+    detection.audit_logs_detect_organization_application_integration_updates,
+    detection.audit_logs_detect_public_repository_create_updates,
+    detection.audit_logs_detect_repository_archive_updates,
+    detection.audit_logs_detect_repository_collaborator_updates,
+    detection.audit_logs_detect_repository_create_events,
+    detection.audit_logs_detect_repository_visibility_changes,
+    detection.audit_logs_detect_dismissed_repository_vulnerabilities,
   ]
 
   tags = merge(local.github_common_tags, {
@@ -61,11 +58,11 @@ detection_benchmark "audit_log_detections" {
  * Detections and queries
  */
 
-detection "audit_logs_action_failed" {
-  title       = "Detect Failed GitHub Actions in Audit Logs"
-  description = "Detect GitHub action failures in audit logs."
+detection "audit_logs_detect_failed_workflow_actions" {
+  title       = "Detect Failed GitHub Actions"
+  description = "Detect instances in audit logs where GitHub Actions workflows fail, potentially indicating unauthorized changes, misconfigurations, or compromised workflows."
   severity    = "high"
-  query       = query.audit_logs_action_failed
+  query       = query.audit_logs_detect_failed_workflow_actions
 
   references = [
     "https://docs.github.com/en/actions/creating-actions/setting-exit-codes-for-actions#about-exit-codes",
@@ -76,10 +73,10 @@ detection "audit_logs_action_failed" {
   })
 }
 
-query "audit_logs_action_failed" {
+query "audit_logs_detect_failed_workflow_actions" {
   sql = <<-EOQ
     select
-      ${local.audit_logs_action_failed_sql}
+      ${local.audit_logs_detect_failed_workflow_actions_sql_columns}
     from
       github_audit_log
     where
@@ -89,11 +86,11 @@ query "audit_logs_action_failed" {
   EOQ
 }
 
-detection "audit_logs_branch_protection_policy_override" {
-  title       = "Detect GitHub Branch Protection Policy Overrides in Audit Logs"
-  description = "Detect GitHub branch protection policy overrides in audit logs."
+detection "audit_logs_detect_branch_protection_policy_overrides" {
+  title       = "Detect Branch Protection Policy Overrides"
+  description = "Detect events in audit logs where branch protection policies are overridden, potentially allowing unauthorized changes, force pushes, or unverified commits."
   severity    = "high"
-  query       = query.audit_logs_branch_protection_policy_override
+  query       = query.audit_logs_detect_branch_protection_policy_overrides
 
   references = [
     "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule",
@@ -104,10 +101,10 @@ detection "audit_logs_branch_protection_policy_override" {
   })
 }
 
-query "audit_logs_branch_protection_policy_override" {
+query "audit_logs_detect_branch_protection_policy_overrides" {
   sql = <<-EOQ
     select
-      ${local.audit_logs_branch_protection_policy_override_sql}
+      ${local.audit_logs_detect_branch_protection_policy_overrides_sql_columns}
     from
       github_audit_log
     where
@@ -118,11 +115,11 @@ query "audit_logs_branch_protection_policy_override" {
   EOQ
 }
 
-detection "audit_logs_branch_protection_disabled" {
-  title       = "Detect Disabling of GitHub Branch Protection Rules in Audit Logs"
-  description = "Identifies actions in GitHub audit logs where branch protection rules are overridden or disabled, which may indicate unauthorized or risky modifications to repository protections."
+detection "audit_logs_detect_branch_protection_disabled_updates" {
+  title       = "Detect Disabling of Branch Protection Rules"
+  description = "Detect actions where branch protection rules are overridden or disabled, potentially exposing the repository to unauthorized changes or malicious commits."
   severity    = "high"
-  query       = query.audit_logs_branch_protection_disabled
+  query       = query.audit_logs_detect_branch_protection_disabled_updates
 
   references = [
     "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule",
@@ -133,10 +130,10 @@ detection "audit_logs_branch_protection_disabled" {
   })
 }
 
-query "audit_logs_branch_protection_disabled" {
+query "audit_logs_detect_branch_protection_disabled_updates" {
   sql = <<-EOQ
     select
-      ${local.audit_logs_branch_protection_disabled_sql}
+      ${local.audit_logs_detect_branch_protection_disabled_updates_sql_columns}
     from
       github_audit_log
     where
@@ -147,11 +144,11 @@ query "audit_logs_branch_protection_disabled" {
   EOQ
 }
 
-detection "audit_logs_organization_authentication_method_update" {
-  title       = "Detect Changes to GitHub Organization Authentication in Audit Logs"
-  description = "Identifies actions in GitHub audit logs where updates are made to the GitHub organization's authentication methods."
+detection "audit_logs_detect_organization_authentication_method_updates" {
+  title       = "Detect Organization Authentication Method Updates"
+  description = "Detect actions where the organization's authentication methods are updated, potentially indicating changes that could weaken security controls or allow unauthorized access."
   severity    = "critical"
-  query       = query.audit_logs_organization_authentication_method_update
+  query       = query.audit_logs_detect_organization_authentication_method_updates
 
   references = [
     "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github",
@@ -162,10 +159,10 @@ detection "audit_logs_organization_authentication_method_update" {
   })
 }
 
-query "audit_logs_organization_authentication_method_update" {
+query "audit_logs_detect_organization_authentication_method_updates" {
   sql = <<-EOQ
     select
-      ${local.audit_logs_organization_authentication_method_update_sql}
+      ${local.audit_logs_detect_organization_authentication_method_updates_sql_columns}
     from
       github_audit_log
     where
@@ -184,11 +181,11 @@ query "audit_logs_organization_authentication_method_update" {
   EOQ
 }
 
-detection "audit_logs_organization_ip_allow_list_modified" {
-  title       = "Detect Changes to GitHub Organization IP Allow List in Audit Logs"
-  description = "Identifies actions in GitHub audit logs where updates are made to the GitHub organization's allowed IP list."
+detection "audit_logs_detect_organization_allowed_ip_list_updates" {
+  title       = "Detect Organization IP Allow List Updates"
+  description = "Detect actions where updates are made to the organization's allowed IP list, which may indicate unauthorized network access changes or potential IP-based access bypasses."
   severity    = "medium"
-  query       = query.audit_logs_organization_ip_allow_list_modified
+  query       = query.audit_logs_detect_organization_allowed_ip_list_updates
 
   references = [
     "https://docs.github.com/en/apps/maintaining-github-apps/managing-allowed-ip-addresses-for-a-github-app",
@@ -199,10 +196,10 @@ detection "audit_logs_organization_ip_allow_list_modified" {
   })
 }
 
-query "audit_logs_organization_ip_allow_list_modified" {
+query "audit_logs_detect_organization_allowed_ip_list_updates" {
   sql = <<-EOQ
     select
-      ${local.audit_logs_organization_ip_allow_list_modified_sql}
+      ${local.audit_logs_detect_organization_allowed_ip_list_updates_sql_columns}
     from
       github_audit_log
     where
@@ -221,11 +218,11 @@ query "audit_logs_organization_ip_allow_list_modified" {
   EOQ
 }
 
-detection "audit_logs_organization_add_user_org_moderator" {
-  title       = "Detect Changes to GitHub Organization Moderator User List in Audit Logs"
-  description = "Identifies actions in GitHub audit logs where updates are made to the GitHub organization's org moderator list."
+detection "audit_logs_detect_organization_moderator_updates" {
+  title       = "Detect Organization Moderator List Updates"
+  description = "Detect actions where updates are made to the organization's moderator list, which may indicate changes to privileged roles within the organization."
   severity    = "medium"
-  query       = query.audit_logs_organization_add_user_org_moderator
+  query       = query.audit_logs_detect_organization_moderator_updates
 
   references = [
     "https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/managing-moderators-in-your-organization",
@@ -236,10 +233,10 @@ detection "audit_logs_organization_add_user_org_moderator" {
   })
 }
 
-query "audit_logs_organization_add_user_org_moderator" {
+query "audit_logs_detect_organization_moderator_updates" {
   sql = <<-EOQ
     select
-      ${local.audit_logs_organization_add_user_org_moderator_sql}
+      ${local.audit_logs_detect_organization_moderator_updates_sql_columns}
     from
       github_audit_log
     where
@@ -250,11 +247,11 @@ query "audit_logs_organization_add_user_org_moderator" {
   EOQ
 }
 
-detection "audit_logs_organization_add_remove_user" {
-  title       = "Detect Adding or Removing User from Organization in Audit Logs"
-  description = "Identifies actions in GitHub audit logs where users are either added or removed."
+detection "audit_logs_detect_organization_user_access_updates" {
+  title       = "Detect Adding or Removing Users from Organization"
+  description = "Detect actions where users are added to or removed from the organization, which may indicate changes in access control or potential insider threats."
   severity    = "low"
-  query       = query.audit_logs_organization_add_remove_user
+  query       = query.audit_logs_detect_organization_user_access_updates
 
   references = [
     "https://docs.github.com/en/organizations/managing-membership-in-your-organization",
@@ -265,10 +262,10 @@ detection "audit_logs_organization_add_remove_user" {
   })
 }
 
-query "audit_logs_organization_add_remove_user" {
+query "audit_logs_detect_organization_user_access_updates" {
   sql = <<-EOQ
     select
-      ${local.audit_logs_organization_add_remove_user_sql}
+      ${local.audit_logs_detect_organization_user_access_updates_sql_columns}
     from
       github_audit_log
     where
@@ -282,11 +279,11 @@ query "audit_logs_organization_add_remove_user" {
   EOQ
 }
 
-detection "audit_logs_organization_add_application_integration" {
-  title       = "Detect Adding an Application Integration to an Organization in Audit Logs"
-  description = "Identifies actions in GitHub audit logs where an application integration is added."
+detection "audit_logs_detect_organization_application_integration_updates" {
+  title       = "Detect Adding Application Integrations to an Organization"
+  description = "Detect actions where an application integration is added to the organization, potentially introducing new permissions or access to external services."
   severity    = "low"
-  query       = query.audit_logs_organization_add_application_integration
+  query       = query.audit_logs_detect_organization_application_integration_updates
 
   references = [
     "https://docs.github.com/en/organizations/managing-membership-in-your-organization",
@@ -297,10 +294,10 @@ detection "audit_logs_organization_add_application_integration" {
   })
 }
 
-query "audit_logs_organization_add_application_integration" {
+query "audit_logs_detect_organization_application_integration_updates" {
   sql = <<-EOQ
     select
-      ${local.audit_logs_organization_add_application_integration_sql}
+      ${local.audit_logs_detect_organization_application_integration_updates_sql_columns}
     from
       github_audit_log
     where
@@ -311,9 +308,9 @@ query "audit_logs_organization_add_application_integration" {
   EOQ
 }
 
-detection "detect_audit_logs_with_public_repository_create_events" {
-  title       = "Detect Audit Logs with Public Repository Create Events"
-  description = "Identifies actions in GitHub audit logs where a repository was made public."
+detection "audit_logs_detect_public_repository_create_updates" {
+  title       = "Detect Public Repository Create Events"
+  description = "Detect actions where a repository's visibility was set to public, potentially exposing sensitive code or data to unauthorized users."
   severity    = "medium"
   query       = query.detect_audit_logs_with_public_repository_create
 
@@ -329,7 +326,7 @@ detection "detect_audit_logs_with_public_repository_create_events" {
 query "detect_audit_logs_with_public_repository_create" {
   sql = <<-EOQ
     select
-      ${local.detect_audit_logs_with_public_repository_create_sql}
+      ${local.detect_audit_logs_with_public_repository_create_sql_columns}
     from
       github_audit_log
     where
@@ -341,11 +338,11 @@ query "detect_audit_logs_with_public_repository_create" {
   EOQ
 }
 
-detection "detect_audit_logs_with_repository_archive_events" {
-  title       = "Detect Audit Logs with Repository Archive Events"
-  description = "Identifies actions in GitHub audit logs where a repository was archived."
+detection "audit_logs_detect_repository_archive_updates" {
+  title       = "Detect Repository Archives"
+  description = "Detect actions where a repository was archived, potentially impacting repository accessibility and signaling a deprecation or maintenance decision."
   severity    = "low"
-  query       = query.detect_audit_logs_with_repository_archive_events
+  query       = query.audit_logs_detect_repository_archive_updates
 
   references = [
     "https://docs.github.com/en/get-started/quickstart/create-a-repo",
@@ -356,10 +353,10 @@ detection "detect_audit_logs_with_repository_archive_events" {
   })
 }
 
-query "detect_audit_logs_with_repository_archive_events" {
+query "audit_logs_detect_repository_archive_updates" {
   sql = <<-EOQ
     select
-      ${local.detect_audit_logs_with_repository_archive_events_sql}
+      ${local.audit_logs_detect_repository_archive_updates_sql_columns}
     from
       github_audit_log
     where
@@ -370,11 +367,11 @@ query "detect_audit_logs_with_repository_archive_events" {
   EOQ
 }
 
-detection "detect_audit_logs_with_repository_collaborator_update_events" {
-  title       = "Detect Audit Logs with Repository Collaborator Update Events"
-  description = "Identifies actions in GitHub audit logs where a repository collaborator list was updated."
+detection "audit_logs_detect_repository_collaborator_updates" {
+  title       = "Detect Repository Collaborator Updates"
+  description = "Detect actions where the repository collaborator list was modified, indicating potential changes in access permissions or security policies within the repository."
   severity    = "medium"
-  query       = query.detect_audit_logs_with_repository_collaborator_update_events
+  query       = query.audit_logs_detect_repository_collaborator_updates
 
   references = [
     "https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/managing-an-individuals-access-to-an-organization-repository",
@@ -385,10 +382,10 @@ detection "detect_audit_logs_with_repository_collaborator_update_events" {
   })
 }
 
-query "detect_audit_logs_with_repository_collaborator_update_events" {
+query "audit_logs_detect_repository_collaborator_updates" {
   sql = <<-EOQ
     select
-      ${local.detect_audit_logs_with_repository_collaborator_update_events_sql}
+      ${local.audit_logs_detect_repository_collaborator_updates_sql_columns}
     from
       github_audit_log
     where
@@ -399,11 +396,11 @@ query "detect_audit_logs_with_repository_collaborator_update_events" {
   EOQ
 }
 
-detection "detect_audit_logs_with_repository_create_events" {
-  title       = "Detect Audit Logs with Repository Create Events"
-  description = "Identifies actions in GitHub audit logs where a repository was created."
+detection "audit_logs_detect_repository_create_events" {
+  title       = "Detect Repository Create Events"
+  description = "Detect actions where a new repository was created, potentially introducing new resources or entry points that may require monitoring for security compliance."
   severity    = "low"
-  query       = query.detect_audit_logs_with_repository_create_events
+  query       = query.audit_logs_detect_repository_create_events
 
   references = [
     "https://docs.github.com/en/get-started/quickstart/create-a-repo",
@@ -414,10 +411,10 @@ detection "detect_audit_logs_with_repository_create_events" {
   })
 }
 
-query "detect_audit_logs_with_repository_create_events" {
+query "audit_logs_detect_repository_create_events" {
   sql = <<-EOQ
     select
-      ${local.detect_audit_logs_with_repository_create_events_sql}
+      ${local.audit_logs_detect_repository_create_events_sql_columns}
     from
       github_audit_log
     where
@@ -428,41 +425,11 @@ query "detect_audit_logs_with_repository_create_events" {
   EOQ
 }
 
-# detection "detect_audit_logs_with_initial_private_repo_access" {
-#   title       = "Detect Audit Logs with Initial Repo Access"
-#   description = "Identifies actions in GitHub audit logs where a private repository was accessed for the first time by a user"
-#   severity    = "low"
-#   query       = query.detect_audit_logs_with_initial_private_repo_access
-
-#   references = [
-#     "https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/managing-an-individuals-access-to-an-organizat",
-#   ]
-
-#   tags = merge(local.github_common_tags, {
-#     mitre_attack_ids = ""
-#   })
-# }
-
-# query "detect_audit_logs_with_initial_private_repo_access" {
-#   sql = <<-EOQ
-#     select
-#       ${local.detect_audit_logs_with_repository_create_events_sql}
-#     from
-#       github_audit_log
-#     where
-#       action in ('repo.add_member', 'repo.remove_member')
-#     order by
-#       tp_timestamp desc
-#     limit 20;
-#   EOQ
-# }
-
-
-detection "detect_audit_logs_with_repository_visibility_change_events" {
-  title       = "Detect Audit Logs with Repository Visibility Change Events"
-  description = "Identifies actions in GitHub audit logs where a repository was either made public or private."
+detection "audit_logs_detect_repository_visibility_changes" {
+  title       = "Detect Repository Visibility Changes"
+  description = "Detect actions where a repository's visibility was changed to either public or private, which may expose sensitive data or restrict necessary access."
   severity    = "high"
-  query       = query.detect_audit_logs_with_repository_visibility_change_events
+  query       = query.audit_logs_detect_repository_visibility_changes
 
   references = [
     "https://docs.github.com/en/get-started/quickstart/create-a-repo",
@@ -473,10 +440,10 @@ detection "detect_audit_logs_with_repository_visibility_change_events" {
   })
 }
 
-query "detect_audit_logs_with_repository_visibility_change_events" {
+query "audit_logs_detect_repository_visibility_changes" {
   sql = <<-EOQ
     select
-      ${local.detect_audit_logs_with_repository_visibility_change_events_sql}
+      ${local.audit_logs_detect_repository_visibility_changes_sql_columns}
     from
       github_audit_log
     where
@@ -487,11 +454,11 @@ query "detect_audit_logs_with_repository_visibility_change_events" {
   EOQ
 }
 
-detection "detect_audit_logs_with_repository_vulnerability_dismissed_events" {
-  title       = "Detect Audit Logs with Repository Vulnerability Dismissed Events"
-  description = "Identifies actions in GitHub audit logs where a repository vulnerability was dismissed."
+detection "audit_logs_detect_dismissed_repository_vulnerabilities" {
+  title       = "Detect Repository Vulnerability Dismissed Events"
+  description = "Detect actions where a repository vulnerability was dismissed, potentially ignoring critical security risks that may expose the repository to exploitation."
   severity    = "high"
-  query       = query.detect_audit_logs_with_repository_vulnerability_dismissed_events
+  query       = query.audit_logs_detect_dismissed_repository_vulnerabilities
 
   references = []
 
@@ -500,10 +467,10 @@ detection "detect_audit_logs_with_repository_vulnerability_dismissed_events" {
   })
 }
 
-query "detect_audit_logs_with_repository_vulnerability_dismissed_events" {
+query "audit_logs_detect_dismissed_repository_vulnerabilities" {
   sql = <<-EOQ
     select
-      ${local.detect_audit_logs_with_repository_vulnerability_dismissed_events_sql}
+      ${local.audit_logs_detect_dismissed_repository_vulnerabilities_sql_columns}
     from
       github_audit_log
     where

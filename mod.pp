@@ -1,6 +1,6 @@
-mod "github" {
+mod "github_detections" {
   # hub metadata
-  title         = "GitHub"
+  title         = "GitHub Detections"
   description   = "Search your GitHub audit logs for high risk actions using Tailpipe."
   color         = "#191717"
   #documentation = file("./docs/index.md")
@@ -9,7 +9,7 @@ mod "github" {
   database      = var.database
 
   opengraph {
-    title       = "Tailpipe Mod for GitHub"
+    title       = "Tailpipe Mod for GitHub Detections"
     description = "Search your GitHub audit logs for high risk actions using Tailpipe."
     #image       = "/images/mods/turbot/github-social-graphic.png"
   }
