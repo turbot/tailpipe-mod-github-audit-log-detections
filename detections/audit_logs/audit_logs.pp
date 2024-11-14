@@ -1,7 +1,7 @@
 locals {
   audit_logs_detect_failed_workflow_actions_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "org")
 
-  audit_logs_detect_branch_protection_policy_overrides_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/commit/', json_extract_string(additional_fields, '$.after'))")
+  audit_logs_detect_branch_protection_policy_overrides_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields ->> '$' ->> 'repo', '/commit/', additional_fields ->> '$' ->> 'after')")
 
   audit_logs_detect_branch_protection_disabled_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'))")
 
@@ -33,20 +33,20 @@ detection_benchmark "audit_log_detections" {
   description = "This detection benchmark contains recommendations when scanning Audit logs."
   type        = "detection"
   children = [
-    detection.audit_logs_detect_failed_workflow_actions,
-    detection.audit_logs_detect_branch_protection_policy_overrides,
     detection.audit_logs_detect_branch_protection_disabled_updates,
-    detection.audit_logs_detect_organization_authentication_method_updates,
+    detection.audit_logs_detect_branch_protection_policy_overrides,
+    detection.audit_logs_detect_dismissed_repository_vulnerabilities,
+    detection.audit_logs_detect_failed_workflow_actions,
     detection.audit_logs_detect_organization_allowed_ip_list_updates,
+    detection.audit_logs_detect_organization_application_integration_updates,
+    detection.audit_logs_detect_organization_authentication_method_updates,
     detection.audit_logs_detect_organization_moderator_updates,
     detection.audit_logs_detect_organization_user_access_updates,
-    detection.audit_logs_detect_organization_application_integration_updates,
     detection.audit_logs_detect_public_repository_create_updates,
     detection.audit_logs_detect_repository_archive_updates,
     detection.audit_logs_detect_repository_collaborator_updates,
     detection.audit_logs_detect_repository_create_events,
     detection.audit_logs_detect_repository_visibility_changes,
-    detection.audit_logs_detect_dismissed_repository_vulnerabilities,
   ]
 
   tags = merge(local.github_common_tags, {

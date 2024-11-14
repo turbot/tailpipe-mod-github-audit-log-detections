@@ -1,7 +1,7 @@
 // Benchmarks and controls for specific services should override the "service" tag
 locals {
   github_common_tags = {
-    category = "Security"
+    category = "Detection"
     plugin   = "github"
     service  = "GitHub"
   }
@@ -16,9 +16,8 @@ locals {
   __RESOURCE_SQL__ as resource,
   actor as actor,
   tp_source_ip as source_ip,
-  tp_index::varchar as org,
+  tp_index as organization,
   tp_id as source_id,
   *
   EOQ
-
 }
