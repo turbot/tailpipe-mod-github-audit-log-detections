@@ -1,31 +1,31 @@
 locals {
-  audit_logs_detect_failed_workflow_actions_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "org")
+  audit_logs_detect_failed_workflow_actions_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "org")
 
-  audit_logs_detect_branch_protection_policy_overrides_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields ->> '$' ->> 'repo', '/commit/', additional_fields ->> '$' ->> 'after')")
+  audit_logs_detect_branch_protection_policy_overrides_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields ->> '$' ->> 'repo', '/commit/', additional_fields ->> '$' ->> 'after')")
 
-  audit_logs_detect_branch_protection_disabled_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'))")
+  audit_logs_detect_branch_protection_disabled_updates_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'))")
 
-  audit_logs_detect_organization_authentication_method_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org, '/settings/authentication')")
+  audit_logs_detect_organization_authentication_method_updates_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org, '/settings/authentication')")
 
-  audit_logs_detect_organization_allowed_ip_list_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
+  audit_logs_detect_organization_allowed_ip_list_updates_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
 
-  audit_logs_detect_organization_application_integration_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
+  audit_logs_detect_organization_application_integration_updates_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
 
-  audit_logs_detect_organization_moderator_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', additional_fields::JSON ->> 'user')")
+  audit_logs_detect_organization_moderator_updates_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', additional_fields::JSON ->> 'user')")
 
-  audit_logs_detect_organization_user_access_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
+  audit_logs_detect_organization_user_access_updates_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
 
-  detect_audit_logs_with_public_repository_create_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  detect_audit_logs_with_public_repository_create_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  audit_logs_detect_repository_archive_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  audit_logs_detect_repository_archive_updates_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  audit_logs_detect_repository_collaborator_updates_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  audit_logs_detect_repository_collaborator_updates_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  audit_logs_detect_repository_create_events_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  audit_logs_detect_repository_create_events_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  audit_logs_detect_repository_visibility_changes_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
+  audit_logs_detect_repository_visibility_changes_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
 
-  audit_logs_detect_dismissed_repository_vulnerabilities_sql_columns = replace(local.common_dimensions_audit_logs_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/security/dependabot/', json_extract_string(additional_fields, '$.alert_number'))")
+  audit_logs_detect_dismissed_repository_vulnerabilities_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/security/dependabot/', json_extract_string(additional_fields, '$.alert_number'))")
 }
 
 detection_benchmark "audit_log_detections" {
@@ -121,6 +121,8 @@ detection "audit_logs_detect_branch_protection_disabled_updates" {
   severity    = "high"
   query       = query.audit_logs_detect_branch_protection_disabled_updates
 
+  display_columns = local.audit_log_detection_display_columns
+
   references = [
     "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule",
   ]
@@ -149,6 +151,8 @@ detection "audit_logs_detect_organization_authentication_method_updates" {
   description = "Detect actions where the organization's authentication methods are updated, potentially indicating changes that could weaken security controls or allow unauthorized access."
   severity    = "critical"
   query       = query.audit_logs_detect_organization_authentication_method_updates
+
+  display_columns = local.audit_log_detection_display_columns
 
   references = [
     "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github",
@@ -187,6 +191,8 @@ detection "audit_logs_detect_organization_allowed_ip_list_updates" {
   severity    = "medium"
   query       = query.audit_logs_detect_organization_allowed_ip_list_updates
 
+  display_columns = local.audit_log_detection_display_columns
+
   references = [
     "https://docs.github.com/en/apps/maintaining-github-apps/managing-allowed-ip-addresses-for-a-github-app",
   ]
@@ -224,6 +230,8 @@ detection "audit_logs_detect_organization_moderator_updates" {
   severity    = "medium"
   query       = query.audit_logs_detect_organization_moderator_updates
 
+  display_columns = local.audit_log_detection_display_columns
+
   references = [
     "https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/managing-moderators-in-your-organization",
   ]
@@ -252,6 +260,8 @@ detection "audit_logs_detect_organization_user_access_updates" {
   description = "Detect actions where users are added to or removed from the organization, which may indicate changes in access control or potential insider threats."
   severity    = "low"
   query       = query.audit_logs_detect_organization_user_access_updates
+
+  display_columns = local.audit_log_detection_display_columns
 
   references = [
     "https://docs.github.com/en/organizations/managing-membership-in-your-organization",
@@ -285,6 +295,8 @@ detection "audit_logs_detect_organization_application_integration_updates" {
   severity    = "low"
   query       = query.audit_logs_detect_organization_application_integration_updates
 
+  display_columns = local.audit_log_detection_display_columns
+
   references = [
     "https://docs.github.com/en/organizations/managing-membership-in-your-organization",
   ]
@@ -313,6 +325,8 @@ detection "audit_logs_detect_public_repository_create_updates" {
   description = "Detect actions where a repository's visibility was set to public, potentially exposing sensitive code or data to unauthorized users."
   severity    = "medium"
   query       = query.detect_audit_logs_with_public_repository_create
+
+  display_columns = local.audit_log_detection_display_columns
 
   references = [
     "https://docs.github.com/en/get-started/quickstart/create-a-repo",
@@ -344,6 +358,8 @@ detection "audit_logs_detect_repository_archive_updates" {
   severity    = "low"
   query       = query.audit_logs_detect_repository_archive_updates
 
+  display_columns = local.audit_log_detection_display_columns
+
   references = [
     "https://docs.github.com/en/get-started/quickstart/create-a-repo",
   ]
@@ -372,6 +388,8 @@ detection "audit_logs_detect_repository_collaborator_updates" {
   description = "Detect actions where the repository collaborator list was modified, indicating potential changes in access permissions or security policies within the repository."
   severity    = "medium"
   query       = query.audit_logs_detect_repository_collaborator_updates
+
+  display_columns = local.audit_log_detection_display_columns
 
   references = [
     "https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/managing-an-individuals-access-to-an-organization-repository",
@@ -402,6 +420,8 @@ detection "audit_logs_detect_repository_create_events" {
   severity    = "low"
   query       = query.audit_logs_detect_repository_create_events
 
+  display_columns = local.audit_log_detection_display_columns
+
   references = [
     "https://docs.github.com/en/get-started/quickstart/create-a-repo",
   ]
@@ -430,6 +450,8 @@ detection "audit_logs_detect_repository_visibility_changes" {
   description = "Detect actions where a repository's visibility was changed to either public or private, which may expose sensitive data or restrict necessary access."
   severity    = "high"
   query       = query.audit_logs_detect_repository_visibility_changes
+
+  display_columns = local.audit_log_detection_display_columns
 
   references = [
     "https://docs.github.com/en/get-started/quickstart/create-a-repo",
@@ -460,6 +482,8 @@ detection "audit_logs_detect_dismissed_repository_vulnerabilities" {
   severity    = "high"
   query       = query.audit_logs_detect_dismissed_repository_vulnerabilities
 
+  display_columns = local.audit_log_detection_display_columns
+
   references = []
 
   tags = merge(local.github_common_tags, {
@@ -480,4 +504,3 @@ query "audit_logs_detect_dismissed_repository_vulnerabilities" {
     limit 20;
   EOQ
 }
-
