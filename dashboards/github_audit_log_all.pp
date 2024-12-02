@@ -12,8 +12,6 @@ dashboard "github_audit_logs_all" {
       title = "Select the date range:"
       type  = "date_range"
       width = 4
-      # TODO: Do we need this sql arg?
-      sql   = "select 1;"
     }
 
   }
