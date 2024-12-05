@@ -113,6 +113,7 @@ detection "audit_logs_detect_branch_protection_disabled_updates" {
   title           = "Detect Disabling of Branch Protection Rules"
   description     = "Detect actions where branch protection rules are overridden or disabled, potentially exposing the repository to unauthorized changes or malicious commits."
   severity        = "high"
+  documentation   = file("./detections/audit_logs/docs/audit_logs_detect_branch_protection_disabled_updates.md")
   query           = query.audit_logs_detect_branch_protection_disabled_updates
   display_columns = local.audit_log_detection_display_columns
 
