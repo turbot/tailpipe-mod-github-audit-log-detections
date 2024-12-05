@@ -28,7 +28,7 @@ locals {
   audit_logs_detect_dismissed_repository_vulnerabilities_sql_columns = replace(local.audit_log_detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/security/dependabot/', json_extract_string(additional_fields, '$.alert_number'))")
 }
 
-detection_benchmark "audit_log_detections" {
+benchmark "audit_log_detections" {
   title       = "Audit Log Detections"
   description = "This detection benchmark contains recommendations when scanning Audit logs."
   type        = "detection"
