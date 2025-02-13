@@ -3,7 +3,7 @@ locals {
   github_common_tags = {
     category = "Detection"
     plugin   = "github"
-    service  = "GitHub"
+    service  = "GitHub/Audit"
   }
 }
 

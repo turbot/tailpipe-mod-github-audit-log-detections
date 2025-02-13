@@ -5,7 +5,7 @@ mod "github_audit_log_detections" {
   color         = "#191717"
   #documentation = file("./docs/index.md")
   icon          = "/images/mods/turbot/github-audit-log-detections.svg"
-  categories    = ["dashboard", "detections", "github", "public cloud"]
+  categories    = ["dashboard", "detections", "github"]
   database      = var.database
 
   opengraph {
