@@ -53,7 +53,7 @@ locals {
   "CONCAT('https://github.com/orgs/', org)")
 
   detection_sql_resource_column_organization_moderator_updates = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/orgs/', additional_fields::JSON ->> 'user')")
+  "CONCAT('https://github.com/orgs/', additional_fields ->> 'user')")
 
   detection_sql_resource_column_repository = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
   "CONCAT('https://github.com/', additional_fields ->> 'repo')")

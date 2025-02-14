@@ -1,35 +1,4 @@
-locals {
-  workflow_run_failed_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "org")
 
-  branch_protection_policy_override_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields ->> '$' ->> 'repo', '/commit/', additional_fields ->> '$' ->> 'after')")
-
-  branch_protection_disabled_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'))")
-
-  organization_authentication_method_updates_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org, '/settings/authentication')")
-
-  organization_ip_allow_list_updated_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
-
-  organization_application_integration_updated_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
-
-  organization_moderator_updates_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', additional_fields::JSON ->> 'user')")
-
-  organization_user_added_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/orgs/', org)")
-
-  detect_audit_logs_with_public_repository_create_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
-
-  repository_archived_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
-
-  repository_collaborator_updates_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
-
-  repository_create_events_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
-
-  repository_visibility_changes_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', additional_fields::JSON ->> 'repo')")
-
-  repository_vulnerability_alert_dismissed_sql_columns = replace(local.detection_sql_columns, "__RESOURCE_SQL__", "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'), '/security/dependabot/', json_extract_string(additional_fields, '$.alert_number'))")
-}
-
-// Add public repo creation events
-// 
 benchmark "audit_log_detections" {
   title       = "Audit Log Detections"
   description = "This detection benchmark contains recommendations when scanning Audit logs."
@@ -82,7 +51,7 @@ detection "branch_protection_policy_override" {
 query "branch_protection_policy_override" {
   sql = <<-EOQ
     select
-      ${local.branch_protection_policy_override_sql_columns}
+      ${local.detection_sql_resource_column_branch_protection_policy_override}
     from
       github_audit_log
     where
@@ -109,7 +78,7 @@ detection "branch_protection_disabled" {
 query "branch_protection_disabled" {
   sql = <<-EOQ
     select
-      ${local.branch_protection_disabled_sql_columns}
+      ${local.detection_sql_resource_column_branch_protection_disabled}
     from
       github_audit_log
     where
@@ -135,7 +104,7 @@ detection "organization_saml_disabled" {
 query "organization_saml_disabled" {
   sql = <<-EOQ
     select
-      ${local.organization_authentication_method_updates_sql_columns}
+      ${local.detection_sql_resource_column_organization_authentication_method_updates}
     from
       github_audit_log
     where
@@ -161,7 +130,7 @@ detection "organization_two_factor_authentication_disabled" {
 query "organization_two_factor_authentication_disabled" {
   sql = <<-EOQ
     select
-      ${local.organization_authentication_method_updates_sql_columns}
+      ${local.detection_sql_resource_column_organization_authentication_method_updates}
     from
       github_audit_log
     where
@@ -187,7 +156,7 @@ detection "organization_ip_allow_list_updated" {
 query "organization_ip_allow_list_updated" {
   sql = <<-EOQ
     select
-      ${local.organization_ip_allow_list_updated_sql_columns}
+      ${local.detection_sql_resource_column_organization}
     from
       github_audit_log
     where
@@ -221,7 +190,7 @@ detection "organization_moderator_added" {
 query "organization_moderator_added" {
   sql = <<-EOQ
     select
-      ${local.organization_moderator_updates_sql_columns}
+      ${local.detection_sql_resource_column_organization_moderator_updates}
     from
       github_audit_log
     where
@@ -247,7 +216,7 @@ detection "organization_moderator_removed" {
 query "organization_moderator_removed" {
   sql = <<-EOQ
     select
-      ${local.organization_moderator_updates_sql_columns}
+      ${local.detection_sql_resource_column_organization_moderator_updates}
     from
       github_audit_log
     where
@@ -273,7 +242,7 @@ detection "organization_user_added" {
 query "organization_user_added" {
   sql = <<-EOQ
     select
-      ${local.organization_user_added_sql_columns}
+      ${local.detection_sql_resource_column_organization}
     from
       github_audit_log
     where
@@ -299,7 +268,7 @@ detection "organization_user_removed" {
 query "organization_user_removed" {
   sql = <<-EOQ
     select
-      ${local.organization_user_added_sql_columns}
+      ${local.detection_sql_resource_column_organization}
     from
       github_audit_log
     where
@@ -325,7 +294,7 @@ detection "organization_application_installed" {
 query "organization_application_installed" {
   sql = <<-EOQ
     select
-      ${local.organization_application_integration_updated_sql_columns}
+      ${local.detection_sql_resource_column_organization}
     from
       github_audit_log
     where
@@ -351,7 +320,7 @@ detection "organization_application_removed" {
 query "organization_application_removed" {
   sql = <<-EOQ
     select
-      ${local.organization_application_integration_updated_sql_columns}
+      ${local.detection_sql_resource_column_organization}
     from
       github_audit_log
     where
@@ -377,7 +346,7 @@ detection "organization_oauth_application_authorized" {
 query "organization_oauth_application_authorized" {
   sql = <<-EOQ
     select
-      ${local.organization_application_integration_updated_sql_columns}
+      ${local.detection_sql_resource_column_organization}
     from
       github_audit_log
     where
@@ -403,7 +372,7 @@ detection "organization_oauth_application_revoked" {
 query "organization_oauth_application_revoked" {
   sql = <<-EOQ
     select
-      ${local.organization_application_integration_updated_sql_columns}
+      ${local.detection_sql_resource_column_organization}
     from
       github_audit_log
     where
@@ -429,7 +398,7 @@ detection "repository_archived" {
 query "repository_archived" {
   sql = <<-EOQ
     select
-      ${local.repository_archived_sql_columns}
+      ${local.detection_sql_resource_column_repository}
     from
       github_audit_log
     where
@@ -455,7 +424,7 @@ detection "repository_collaborator_updates" {
 query "repository_collaborator_updates" {
   sql = <<-EOQ
     select
-      ${local.repository_collaborator_updates_sql_columns}
+      ${local.detection_sql_resource_column_repository}
     from
       github_audit_log
     where
@@ -481,7 +450,7 @@ detection "repository_vulnerability_alert_dismissed" {
 query "repository_vulnerability_alert_dismissed" {
   sql = <<-EOQ
     select
-      ${local.repository_vulnerability_alert_dismissed_sql_columns}
+      ${local.detection_sql_resource_column_repository_vulnerability_alert_dismissed}
     from
       github_audit_log
     where
@@ -507,7 +476,7 @@ detection "organization_ownership_transferred" {
 query "organization_ownership_transferred" {
   sql = <<-EOQ
     select
-      ${local.organization_ip_allow_list_updated_sql_columns}
+      ${local.detection_sql_resource_column_organization}
     from
       github_audit_log
     where
@@ -533,7 +502,7 @@ detection "repository_visibility_set_public" {
 query "repository_visibility_set_public" {
   sql = <<-EOQ
     select
-      ${local.repository_create_events_sql_columns}
+      ${local.detection_sql_resource_column_repository}
     from
       github_audit_log
     where
