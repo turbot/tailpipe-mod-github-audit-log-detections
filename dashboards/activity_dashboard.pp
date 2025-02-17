@@ -4,7 +4,7 @@ dashboard "github_activity_dashboard" {
 
   tags = {
     type    = "Dashboard"
-    service = "GitHub"
+    service = "GitHub/AuditLog"
   }
 
   container {
@@ -48,8 +48,8 @@ dashboard "github_activity_dashboard" {
     }
 
     chart {
-      title = "Top 10 Events"
-      query = query.github_activity_dashboard_logs_by_event
+      title = "Top 10 Actions"
+      query = query.github_activity_dashboard_logs_by_action
       type  = "table"
       width = 6
     }
@@ -148,12 +148,12 @@ query "github_activity_dashboard_logs_by_source_ip" {
   EOQ
 }
 
-query "github_activity_dashboard_logs_by_event" {
-  title = "Top 10 Events"
+query "github_activity_dashboard_logs_by_action" {
+  title = "Top 10 Actions"
 
   sql = <<-EOQ
     select
-      action as "Event",
+      action as "Action",
       count(*) as "Logs"
     from
       github_audit_log

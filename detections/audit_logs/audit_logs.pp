@@ -94,7 +94,7 @@ detection "organization_saml_disabled" {
   description     = "Detect when SAML authentication was disabled for a GitHub organization, potentially allowing unauthorized access or weakening authentication controls."
   severity        = "critical"
   query           = query.organization_saml_disabled
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098"
@@ -120,7 +120,7 @@ detection "organization_two_factor_authentication_disabled" {
   description     = "Detect when two-factor authentication was disabled for a GitHub organization, potentially increasing the risk of unauthorized access."
   severity        = "critical"
   query           = query.organization_two_factor_authentication_disabled
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098"
@@ -146,7 +146,7 @@ detection "organization_ip_allow_list_updated" {
   description     = "Detect when changes were made to an organization's IP allow list, potentially indicating unauthorized network access modifications or security policy bypasses."
   severity        = "medium"
   query           = query.organization_ip_allow_list_updated
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098"
@@ -180,7 +180,7 @@ detection "organization_moderator_added" {
   description     = "Detect when a user was added as a moderator in an organization, potentially increasing their privileges."
   severity        = "medium"
   query           = query.organization_moderator_added
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098"
@@ -206,7 +206,7 @@ detection "organization_moderator_removed" {
   description     = "Detect when an organization's moderator was removed, potentially reducing oversight and security controls."
   severity        = "high"
   query           = query.organization_moderator_removed
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098"
@@ -232,7 +232,7 @@ detection "organization_user_added" {
   description     = "Detect when a user was added to a GitHub organization, which may indicate a new access provision or a potential unauthorized account being added."
   severity        = "low"
   query           = query.organization_user_added
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0001:T1195"
@@ -258,7 +258,7 @@ detection "organization_user_removed" {
   description     = "Detect when a user was removed from a GitHub organization, potentially indicating an access revocation or an unauthorized removal."
   severity        = "medium"
   query           = query.organization_user_removed
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0001:T1195"
@@ -284,7 +284,7 @@ detection "organization_application_installed" {
   description     = "Detect when an application integration was installed in a GitHub organization, potentially introducing new permissions or external service access."
   severity        = "low"
   query           = query.organization_application_installed
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098"
@@ -310,7 +310,7 @@ detection "organization_application_removed" {
   description     = "Detect when an application integration was removed from a GitHub organization, which may impact service dependencies or security controls."
   severity        = "medium"
   query           = query.organization_application_removed
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098, TA0001:T1195.002"
@@ -336,7 +336,7 @@ detection "organization_oauth_application_authorized" {
   description     = "Detect when an OAuth application was authorized in a GitHub organization, potentially granting external services access to organization data."
   severity        = "low"
   query           = query.organization_oauth_application_authorized
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098"
@@ -362,7 +362,7 @@ detection "organization_oauth_application_revoked" {
   description     = "Detect when an OAuth application authorization was revoked in a GitHub organization, which may indicate security control enforcement or a misconfiguration."
   severity        = "medium"
   query           = query.organization_oauth_application_revoked
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098, TA0001:T1195.002"
@@ -466,7 +466,7 @@ detection "organization_ownership_transferred" {
   description     = "Detect when an organization was transferred to a new owner, which may indicate a takeover attempt or unauthorized privilege escalation."
   severity        = "medium"
   query           = query.organization_ownership_transferred
-  display_columns = local.audit_log_detection_display_columns
+  display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
     mitre_attack_ids = "TA0003:T1098"

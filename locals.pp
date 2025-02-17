@@ -3,7 +3,7 @@ locals {
   github_audit_log_detections_common_tags = {
     category = "Detections"
     plugin   = "github"
-    service  = "GitHub/Audit"
+    service  = "GitHub/AuditLog"
   }
 }
 
@@ -14,13 +14,24 @@ locals {
   tp_timestamp as timestamp,
   action as operation,
   __RESOURCE_SQL__ as resource,
-  actor as actor,
+  actor,
   tp_source_ip as source_ip,
   tp_index as organization,
   repo as repository,
   tp_id as source_id,
   *
+  exclude (actor,timestamp)
   EOQ
+
+  audit_log_organization_detection_display_columns = [
+    "timestamp",
+    "operation",
+    "resource",
+    "actor",
+    "source_ip",
+    "organization",
+    "source_id"
+  ]
 
   audit_log_detection_display_columns = [
     "timestamp",
