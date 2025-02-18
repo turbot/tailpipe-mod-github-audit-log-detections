@@ -41,7 +41,7 @@ dashboard "github_activity_dashboard" {
     }
 
     chart {
-      title = "Top 10 Source IPs (Excluding GitHub Internal)"
+      title = "Top 10 Source IPs"
       query = query.github_activity_dashboard_logs_by_source_ip
       type  = "table"
       width = 6
@@ -54,6 +54,12 @@ dashboard "github_activity_dashboard" {
       width = 6
     }
 
+    chart {
+      title = "Top 10 Actions"
+      query = query.github_activity_dashboard_failed_logins
+      type  = "table"
+      width = 6
+    }
   }
 
 }
@@ -128,7 +134,7 @@ query "github_activity_dashboard_logs_by_actor" {
 }
 
 query "github_activity_dashboard_logs_by_source_ip" {
-  title = "Top 10 Source IPs (Excluding GitHub Internal)"
+  title = "Top 10 Source IPs"
 
   sql = <<-EOQ
     select
@@ -159,6 +165,26 @@ query "github_activity_dashboard_logs_by_action" {
       github_audit_log
     group by
       action
+    order by
+      count(*) desc
+    limit 10;
+  EOQ
+}
+
+query "github_activity_dashboard_failed_logins" {
+  title = "Top 10 Failed User Logins"
+
+  sql = <<-EOQ
+    select
+      actor as "User",
+      count(*) as "Failed Attempts"
+    from
+      github_audit_log
+    where
+      action = 'user.failed_login'
+      and actor is not null
+    group by
+      actor
     order by
       count(*) desc
     limit 10;
