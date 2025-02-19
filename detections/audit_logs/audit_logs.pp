@@ -5,7 +5,7 @@ benchmark "audit_log_detections" {
   type        = "detection"
   children = [
     detection.branch_protection_disabled,
-    detection.branch_protection_policy_override,
+    detection.branch_protection_policy_overridden,
     detection.organization_application_installed,
     detection.organization_application_removed,
     detection.organization_ip_allow_list_updated,
@@ -36,11 +36,11 @@ benchmark "audit_log_detections" {
  * Detections and queries
  */
 
-detection "branch_protection_policy_override" {
-  title           = "Branch Protection Policy Override"
+detection "branch_protection_policy_overridden" {
+  title           = "Branch Protection Policy Overridden"
   description     = "Detect when a branch protection policy was overridden, potentially allowing unauthorized changes, force pushes, or unverified commits."
   severity        = "high"
-  query           = query.branch_protection_policy_override
+  query           = query.branch_protection_policy_overridden
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
@@ -48,10 +48,10 @@ detection "branch_protection_policy_override" {
   })
 }
 
-query "branch_protection_policy_override" {
+query "branch_protection_policy_overridden" {
   sql = <<-EOQ
     select
-      ${local.detection_sql_resource_column_branch_protection_policy_override}
+      ${local.detection_sql_resource_column_branch_protection_policy_overridden}
     from
       github_audit_log
     where
@@ -384,7 +384,7 @@ query "organization_oauth_application_revoked" {
 }
 
 detection "repository_archived" {
-  title           = "GitHub Repository Archived"
+  title           = "Repository Archived"
   description     = "Detect when a GitHub repository was archived, potentially impacting repository accessibility and signaling a deprecation or maintenance decision."
   severity        = "low"
   query           = query.repository_archived
@@ -410,7 +410,7 @@ query "repository_archived" {
 }
 
 detection "repository_collaborator_updates" {
-  title           = "Detect Repository Collaborator Updates"
+  title           = "Repository Collaborator Updates"
   description     = "Detect actions where the repository collaborator list was modified, indicating potential changes in access permissions or security policies within the repository."
   severity        = "medium"
   query           = query.repository_collaborator_updates
@@ -436,7 +436,7 @@ query "repository_collaborator_updates" {
 }
 
 detection "repository_vulnerability_alert_dismissed" {
-  title           = "GitHub Repository Vulnerability Alert Dismissed"
+  title           = "Repository Vulnerability Alert Dismissed"
   description     = "Detect when a repository vulnerability alert was dismissed, potentially ignoring critical security risks that may expose the repository to exploitation."
   severity        = "high"
   query           = query.repository_vulnerability_alert_dismissed

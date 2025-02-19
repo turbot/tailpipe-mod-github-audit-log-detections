@@ -48,7 +48,7 @@ locals {
 locals {
   # Local internal variables to build the SQL select clause for common
   # dimensions. Do not edit directly.
-  detection_sql_resource_column_branch_protection_policy_override = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
+  detection_sql_resource_column_branch_protection_policy_overridden = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
   "CONCAT('https://github.com/', additional_fields ->> 'repo', '/commit/', additional_fields ->> 'after')")
 
   detection_sql_resource_column_branch_protection_disabled = replace(local.detection_sql_columns, "__RESOURCE_SQL__",

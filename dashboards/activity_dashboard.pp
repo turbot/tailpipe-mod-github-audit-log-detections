@@ -1,5 +1,5 @@
-dashboard "github_activity_dashboard" {
-  title         = "GitHub Audit Log Activity Dashboard"
+dashboard "activity_dashboard" {
+  title         = "Audit Log Activity Dashboard"
   documentation = file("./dashboards/docs/activity_dashboard.md")
 
   tags = {
@@ -11,7 +11,7 @@ dashboard "github_activity_dashboard" {
 
     # Analysis
     card {
-      query = query.github_activity_dashboard_total_logs
+      query = query.activity_dashboard_total_logs
       width = 2
     }
 
@@ -21,42 +21,42 @@ dashboard "github_activity_dashboard" {
 
     chart {
       title = "Logs by Organization"
-      query = query.github_activity_dashboard_logs_by_org
+      query = query.activity_dashboard_logs_by_org
       type  = "column"
       width = 6
     }
 
     chart {
       title = "Logs by Repository"
-      query = query.github_activity_dashboard_logs_by_repository
+      query = query.activity_dashboard_logs_by_repository
       type  = "column"
       width = 6
     }
 
     chart {
       title = "Top 10 Actors (Excluding Bots)"
-      query = query.github_activity_dashboard_logs_by_actor
+      query = query.activity_dashboard_logs_by_actor
       type  = "table"
       width = 6
     }
 
     chart {
       title = "Top 10 Source IPs"
-      query = query.github_activity_dashboard_logs_by_source_ip
+      query = query.activity_dashboard_logs_by_source_ip
       type  = "table"
       width = 6
     }
 
     chart {
       title = "Top 10 Actions"
-      query = query.github_activity_dashboard_logs_by_action
+      query = query.activity_dashboard_logs_by_action
       type  = "table"
       width = 6
     }
 
     chart {
-      title = "Top 10 Actions"
-      query = query.github_activity_dashboard_failed_logins
+      title = "Top 10 Failed User Logins"
+      query = query.activity_dashboard_failed_logins
       type  = "table"
       width = 6
     }
@@ -66,7 +66,7 @@ dashboard "github_activity_dashboard" {
 
 # Query definitions
 
-query "github_activity_dashboard_total_logs" {
+query "activity_dashboard_total_logs" {
   title = "Log Count"
 
   sql = <<-EOQ
@@ -77,7 +77,7 @@ query "github_activity_dashboard_total_logs" {
   EOQ
 }
 
-query "github_activity_dashboard_logs_by_org" {
+query "activity_dashboard_logs_by_org" {
   title = "Logs by Organization"
 
   sql = <<-EOQ
@@ -95,7 +95,7 @@ query "github_activity_dashboard_logs_by_org" {
   EOQ
 }
 
-query "github_activity_dashboard_logs_by_repository" {
+query "activity_dashboard_logs_by_repository" {
   title = "Logs by Repository"
 
   sql = <<-EOQ
@@ -113,7 +113,7 @@ query "github_activity_dashboard_logs_by_repository" {
   EOQ
 }
 
-query "github_activity_dashboard_logs_by_actor" {
+query "activity_dashboard_logs_by_actor" {
   title = "Top 10 Actors (Excluding Bots)"
 
   sql = <<-EOQ
@@ -133,7 +133,7 @@ query "github_activity_dashboard_logs_by_actor" {
   EOQ
 }
 
-query "github_activity_dashboard_logs_by_source_ip" {
+query "activity_dashboard_logs_by_source_ip" {
   title = "Top 10 Source IPs"
 
   sql = <<-EOQ
@@ -154,7 +154,7 @@ query "github_activity_dashboard_logs_by_source_ip" {
   EOQ
 }
 
-query "github_activity_dashboard_logs_by_action" {
+query "activity_dashboard_logs_by_action" {
   title = "Top 10 Actions"
 
   sql = <<-EOQ
@@ -171,7 +171,7 @@ query "github_activity_dashboard_logs_by_action" {
   EOQ
 }
 
-query "github_activity_dashboard_failed_logins" {
+query "activity_dashboard_failed_logins" {
   title = "Top 10 Failed User Logins"
 
   sql = <<-EOQ
