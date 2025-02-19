@@ -5,14 +5,14 @@ locals {
 }
 
 benchmark "mitre_attack_v161_ta0001_t1199" {
-  title = "T1199 Trusted Relationship"
-  type  = "detection"
+  title         = "T1199 Trusted Relationship"
+  type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0001_t1199.md")
   children = [
     detection.organization_application_installed,
     detection.organization_oauth_application_authorized,
     detection.organization_oauth_application_revoked,
-    detection.repository_collaborator_updates,
+    detection.repository_collaborator_list_updated,
   ]
 
   tags = local.mitre_attack_v161_ta0001_t1199_common_tags

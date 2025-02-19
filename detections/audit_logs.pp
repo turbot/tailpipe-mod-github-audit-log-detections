@@ -17,14 +17,14 @@ benchmark "audit_log_detections" {
     detection.organization_saml_disabled,
     detection.organization_two_factor_authentication_disabled,
     detection.organization_user_added,
+    detection.organization_user_granted_admin_privilege,
     detection.organization_user_removed,
     detection.personal_access_token_created,
     detection.repository_archived,
-    detection.repository_collaborator_updates,
+    detection.repository_collaborator_list_updated,
     detection.repository_visibility_set_public,
     detection.repository_vulnerability_alert_dismissed,
     detection.user_authentication_failed,
-    detection.user_promoted_to_admin,
   ]
 
   tags = merge(local.github_audit_log_detections_common_tags, {
@@ -39,6 +39,7 @@ benchmark "audit_log_detections" {
 detection "branch_protection_policy_overridden" {
   title           = "Branch Protection Policy Overridden"
   description     = "Detect when a branch protection policy was overridden, potentially allowing unauthorized changes, force pushes, or unverified commits."
+  documentation   = file("./detections/docs/branch_protection_policy_overridden.md")
   severity        = "high"
   query           = query.branch_protection_policy_overridden
   display_columns = local.audit_log_detection_display_columns
@@ -63,10 +64,10 @@ query "branch_protection_policy_overridden" {
 }
 
 detection "branch_protection_disabled" {
-  title       = "Branch Protection Disabled"
-  description = "Detect when branch protection was disabled, potentially exposing the repository to unauthorized changes or malicious commits."
-  severity    = "high"
-  # documentation   = file("./detections/audit_logs/docs/branch_protection_disabled.md")
+  title           = "Branch Protection Disabled"
+  description     = "Detect when branch protection was disabled, potentially exposing the repository to unauthorized changes or malicious commits."
+  documentation   = file("./detections/docs/branch_protection_disabled.md")
+  severity        = "high"
   query           = query.branch_protection_disabled
   display_columns = local.audit_log_detection_display_columns
 
@@ -92,7 +93,8 @@ query "branch_protection_disabled" {
 detection "organization_saml_disabled" {
   title           = "Organization SAML Disabled"
   description     = "Detect when SAML authentication was disabled for a GitHub organization, potentially allowing unauthorized access or weakening authentication controls."
-  severity        = "critical"
+  documentation   = file("./detections/docs/organization_saml_disabled.md")
+  severity        = "high"
   query           = query.organization_saml_disabled
   display_columns = local.audit_log_organization_detection_display_columns
 
@@ -118,7 +120,8 @@ query "organization_saml_disabled" {
 detection "organization_two_factor_authentication_disabled" {
   title           = "Organization Two-Factor Authentication Disabled"
   description     = "Detect when two-factor authentication was disabled for a GitHub organization, potentially increasing the risk of unauthorized access."
-  severity        = "critical"
+  documentation   = file("./detections/docs/organization_two_factor_authentication_disabled.md")
+  severity        = "high"
   query           = query.organization_two_factor_authentication_disabled
   display_columns = local.audit_log_organization_detection_display_columns
 
@@ -144,6 +147,7 @@ query "organization_two_factor_authentication_disabled" {
 detection "organization_ip_allow_list_updated" {
   title           = "Organization IP Allow List Updated"
   description     = "Detect when changes were made to an organization's IP allow list, potentially indicating unauthorized network access modifications or security policy bypasses."
+  documentation   = file("./detections/docs/organization_ip_allow_list_updated.md")
   severity        = "medium"
   query           = query.organization_ip_allow_list_updated
   display_columns = local.audit_log_organization_detection_display_columns
@@ -178,6 +182,7 @@ query "organization_ip_allow_list_updated" {
 detection "organization_moderator_added" {
   title           = "Organization Moderator Added"
   description     = "Detect when a user was added as a moderator in an organization, potentially increasing their privileges."
+  documentation   = file("./detections/docs/organization_moderator_added.md")
   severity        = "medium"
   query           = query.organization_moderator_added
   display_columns = local.audit_log_organization_detection_display_columns
@@ -204,6 +209,7 @@ query "organization_moderator_added" {
 detection "organization_moderator_removed" {
   title           = "Organization Moderator Removed"
   description     = "Detect when an organization's moderator was removed, potentially reducing oversight and security controls."
+  documentation   = file("./detections/docs/organization_moderator_removed.md")
   severity        = "high"
   query           = query.organization_moderator_removed
   display_columns = local.audit_log_organization_detection_display_columns
@@ -230,6 +236,7 @@ query "organization_moderator_removed" {
 detection "organization_user_added" {
   title           = "Organization User Added"
   description     = "Detect when a user was added to a GitHub organization, which may indicate a new access provision or a potential unauthorized account being added."
+  documentation   = file("./detections/docs/organization_user_added.md")
   severity        = "low"
   query           = query.organization_user_added
   display_columns = local.audit_log_organization_detection_display_columns
@@ -256,6 +263,7 @@ query "organization_user_added" {
 detection "organization_user_removed" {
   title           = "Organization User Removed"
   description     = "Detect when a user was removed from a GitHub organization, potentially indicating an access revocation or an unauthorized removal."
+  documentation   = file("./detections/docs/organization_user_removed.md")
   severity        = "medium"
   query           = query.organization_user_removed
   display_columns = local.audit_log_organization_detection_display_columns
@@ -282,6 +290,7 @@ query "organization_user_removed" {
 detection "organization_application_installed" {
   title           = "Organization Application Installed"
   description     = "Detect when an application integration was installed in a GitHub organization, potentially introducing new permissions or external service access."
+  documentation   = file("./detections/docs/organization_application_installed.md")
   severity        = "low"
   query           = query.organization_application_installed
   display_columns = local.audit_log_organization_detection_display_columns
@@ -308,6 +317,7 @@ query "organization_application_installed" {
 detection "organization_application_removed" {
   title           = "Organization Application Removed"
   description     = "Detect when an application integration was removed from a GitHub organization, which may impact service dependencies or security controls."
+  documentation   = file("./detections/docs/organization_application_removed.md")
   severity        = "medium"
   query           = query.organization_application_removed
   display_columns = local.audit_log_organization_detection_display_columns
@@ -334,6 +344,7 @@ query "organization_application_removed" {
 detection "organization_oauth_application_authorized" {
   title           = "Organization OAuth Application Authorized"
   description     = "Detect when an OAuth application was authorized in a GitHub organization, potentially granting external services access to organization data."
+  documentation   = file("./detections/docs/organization_oauth_application_authorized.md")
   severity        = "low"
   query           = query.organization_oauth_application_authorized
   display_columns = local.audit_log_organization_detection_display_columns
@@ -360,6 +371,7 @@ query "organization_oauth_application_authorized" {
 detection "organization_oauth_application_revoked" {
   title           = "Organization OAuth Application Revoked"
   description     = "Detect when an OAuth application authorization was revoked in a GitHub organization, which may indicate security control enforcement or a misconfiguration."
+  documentation   = file("./detections/docs/organization_oauth_application_revoked.md")
   severity        = "medium"
   query           = query.organization_oauth_application_revoked
   display_columns = local.audit_log_organization_detection_display_columns
@@ -386,6 +398,7 @@ query "organization_oauth_application_revoked" {
 detection "repository_archived" {
   title           = "Repository Archived"
   description     = "Detect when a GitHub repository was archived, potentially impacting repository accessibility and signaling a deprecation or maintenance decision."
+  documentation   = file("./detections/docs/repository_archived.md")
   severity        = "low"
   query           = query.repository_archived
   display_columns = local.audit_log_detection_display_columns
@@ -409,11 +422,12 @@ query "repository_archived" {
   EOQ
 }
 
-detection "repository_collaborator_updates" {
-  title           = "Repository Collaborator Updates"
-  description     = "Detect actions where the repository collaborator list was modified, indicating potential changes in access permissions or security policies within the repository."
+detection "repository_collaborator_list_updated" {
+  title           = "Repository Collaborator List Updated"
+  description     = "Detect when the repository collaborator list was updated, indicating potential changes in access permissions or security policies within the repository."
+  documentation   = file("./detections/docs/repository_collaborator_list_updated.md")
   severity        = "medium"
-  query           = query.repository_collaborator_updates
+  query           = query.repository_collaborator_list_updated
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
@@ -421,7 +435,7 @@ detection "repository_collaborator_updates" {
   })
 }
 
-query "repository_collaborator_updates" {
+query "repository_collaborator_list_updated" {
   sql = <<-EOQ
     select
       ${local.detection_sql_resource_column_repository}
@@ -430,14 +444,14 @@ query "repository_collaborator_updates" {
     where
       action in ('repo.add_member', 'repo.remove_member')
     order by
-      tp_timestamp desc
-    limit 20;
+      tp_timestamp desc;
   EOQ
 }
 
 detection "repository_vulnerability_alert_dismissed" {
   title           = "Repository Vulnerability Alert Dismissed"
-  description     = "Detect when a repository vulnerability alert was dismissed, potentially ignoring critical security risks that may expose the repository to exploitation."
+  description     = "Detect when a repository vulnerability alert was dismissed, potentially ignoring high security risks that may expose the repository to exploitation."
+  documentation   = file("./detections/docs/repository_vulnerability_alert_dismissed.md")
   severity        = "high"
   query           = query.repository_vulnerability_alert_dismissed
   display_columns = local.audit_log_detection_display_columns
@@ -464,6 +478,7 @@ query "repository_vulnerability_alert_dismissed" {
 detection "organization_ownership_transferred" {
   title           = "Organization Ownership Transferred"
   description     = "Detect when an organization was transferred to a new owner, which may indicate a takeover attempt or unauthorized privilege escalation."
+  documentation   = file("./detections/docs/organization_ownership_transferred.md")
   severity        = "medium"
   query           = query.organization_ownership_transferred
   display_columns = local.audit_log_organization_detection_display_columns
@@ -490,6 +505,7 @@ query "organization_ownership_transferred" {
 detection "repository_visibility_set_public" {
   title           = "Repository Visibility Set Public"
   description     = "Detect when a private repository's visibility was set to public, potentially exposing proprietary or sensitive code."
+  documentation   = file("./detections/docs/repository_visibility_set_public.md")
   severity        = "high"
   query           = query.repository_visibility_set_public
   display_columns = local.audit_log_detection_display_columns
@@ -518,6 +534,7 @@ query "repository_visibility_set_public" {
 detection "personal_access_token_created" {
   title           = "Personal Access Token Created"
   description     = "Detect when a GitHub personal access token (PAT) was created, potentially granting access to repositories, actions, or APIs."
+  documentation   = file("./detections/docs/personal_access_token_created.md")
   severity        = "medium"
   query           = query.personal_access_token_created
   display_columns = local.audit_log_detection_display_columns
@@ -541,11 +558,12 @@ query "personal_access_token_created" {
   EOQ
 }
 
-detection "user_promoted_to_admin" {
-  title           = "User Promoted to Organization Admin"
-  description     = "Detect when a GitHub user was granted organization admin privileges, potentially leading to unauthorized control over repositories and settings."
-  severity        = "critical"
-  query           = query.user_promoted_to_admin
+detection "organization_user_granted_admin_privilege" {
+  title           = "Organization User Granted Admin Privilege"
+  description     = "Detect when an organization's user was granted admin privileges, potentially leading to unauthorized control over repositories and settings."
+  documentation   = file("./detections/docs/organization_user_granted_admin_privilege.md")
+  severity        = "high"
+  query           = query.organization_user_granted_admin_privilege
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
@@ -553,7 +571,7 @@ detection "user_promoted_to_admin" {
   })
 }
 
-query "user_promoted_to_admin" {
+query "organization_user_granted_admin_privilege" {
   sql = <<-EOQ
     select
       ${local.detection_sql_resource_column_user}
@@ -571,6 +589,7 @@ query "user_promoted_to_admin" {
 detection "user_authentication_failed" {
   title           = "User Authentication Failed"
   description     = "Detect when a user failed to authenticate, which may indicate unauthorized access attempts or credential stuffing attacks."
+  documentation   = file("./detections/docs/user_authentication_failed.md")
   severity        = "medium"
   query           = query.user_authentication_failed
   display_columns = local.audit_log_detection_display_columns
