@@ -61,13 +61,13 @@ dashboard "activity_dashboard" {
       width = 6
     }
   }
-
 }
 
 # Query definitions
 
 query "activity_dashboard_total_logs" {
-  title = "Log Count"
+  title       = "Log Count"
+  description = "Count the total audit log entries."
 
   sql = <<-EOQ
     select
@@ -78,7 +78,8 @@ query "activity_dashboard_total_logs" {
 }
 
 query "activity_dashboard_logs_by_org" {
-  title = "Logs by Organization"
+  title       = "Logs by Organization"
+  description = "Count audit log entries grouped by organization."
 
   sql = <<-EOQ
     select
@@ -96,7 +97,8 @@ query "activity_dashboard_logs_by_org" {
 }
 
 query "activity_dashboard_logs_by_repository" {
-  title = "Logs by Repository"
+  title       = "Logs by Repository"
+  description = "Count audit log entries grouped by repository."
 
   sql = <<-EOQ
     select
@@ -114,7 +116,8 @@ query "activity_dashboard_logs_by_repository" {
 }
 
 query "activity_dashboard_logs_by_actor" {
-  title = "Top 10 Actors (Excluding Bots)"
+  title       = "Top 10 Actors (Excluding Bots)"
+  description = "List the top 10 actors by frequency, excluding bot accounts."
 
   sql = <<-EOQ
     select
@@ -134,7 +137,8 @@ query "activity_dashboard_logs_by_actor" {
 }
 
 query "activity_dashboard_logs_by_source_ip" {
-  title = "Top 10 Source IPs"
+  title       = "Top 10 Source IPs"
+  description = "List the top 10 source IPs by frequency, excluding internal GitHub IPs."
 
   sql = <<-EOQ
     select
@@ -155,7 +159,8 @@ query "activity_dashboard_logs_by_source_ip" {
 }
 
 query "activity_dashboard_logs_by_action" {
-  title = "Top 10 Actions"
+  title       = "Top 10 Actions"
+  description = "List the 10 most frequently recorded actions in the audit logs."
 
   sql = <<-EOQ
     select
@@ -172,7 +177,8 @@ query "activity_dashboard_logs_by_action" {
 }
 
 query "activity_dashboard_failed_logins" {
-  title = "Top 10 Failed User Logins"
+  title       = "Top 10 Failed User Logins"
+  description = "List the top 10 users with the most failed login attempts."
 
   sql = <<-EOQ
     select
@@ -190,4 +196,3 @@ query "activity_dashboard_failed_logins" {
     limit 10;
   EOQ
 }
-
