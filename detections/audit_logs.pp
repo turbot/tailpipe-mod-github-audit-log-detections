@@ -45,6 +45,7 @@ detection "branch_protection_policy_overridden" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Branch",
     mitre_attack_ids = "TA0001:T1195"
   })
 }
@@ -61,6 +62,9 @@ query "branch_protection_policy_overridden" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Branch"
+  })
 }
 
 detection "branch_protection_disabled" {
@@ -72,6 +76,7 @@ detection "branch_protection_disabled" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Branch",
     mitre_attack_ids = "TA0001:T1195"
   })
 }
@@ -88,6 +93,9 @@ query "branch_protection_disabled" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Branch"
+  })
 }
 
 detection "organization_saml_disabled" {
@@ -99,6 +107,7 @@ detection "organization_saml_disabled" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098"
   })
 }
@@ -115,6 +124,9 @@ query "organization_saml_disabled" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_two_factor_authentication_disabled" {
@@ -126,6 +138,7 @@ detection "organization_two_factor_authentication_disabled" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098"
   })
 }
@@ -142,6 +155,9 @@ query "organization_two_factor_authentication_disabled" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_ip_allow_list_updated" {
@@ -153,6 +169,7 @@ detection "organization_ip_allow_list_updated" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098"
   })
 }
@@ -177,6 +194,9 @@ query "organization_ip_allow_list_updated" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_moderator_added" {
@@ -188,6 +208,7 @@ detection "organization_moderator_added" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098"
   })
 }
@@ -204,6 +225,9 @@ query "organization_moderator_added" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_moderator_removed" {
@@ -215,6 +239,7 @@ detection "organization_moderator_removed" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098"
   })
 }
@@ -231,6 +256,9 @@ query "organization_moderator_removed" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_user_added" {
@@ -242,6 +270,7 @@ detection "organization_user_added" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0001:T1195"
   })
 }
@@ -258,6 +287,9 @@ query "organization_user_added" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_user_removed" {
@@ -269,6 +301,7 @@ detection "organization_user_removed" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0001:T1195"
   })
 }
@@ -285,6 +318,9 @@ query "organization_user_removed" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_application_installed" {
@@ -296,6 +332,7 @@ detection "organization_application_installed" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098"
   })
 }
@@ -312,6 +349,9 @@ query "organization_application_installed" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_application_removed" {
@@ -323,6 +363,7 @@ detection "organization_application_removed" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098, TA0001:T1195.002"
   })
 }
@@ -339,6 +380,9 @@ query "organization_application_removed" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_oauth_application_authorized" {
@@ -350,6 +394,7 @@ detection "organization_oauth_application_authorized" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098"
   })
 }
@@ -366,6 +411,9 @@ query "organization_oauth_application_authorized" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "organization_oauth_application_revoked" {
@@ -377,6 +425,7 @@ detection "organization_oauth_application_revoked" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098, TA0001:T1195.002"
   })
 }
@@ -393,6 +442,9 @@ query "organization_oauth_application_revoked" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "repository_archived" {
@@ -404,6 +456,7 @@ detection "repository_archived" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Repository",
     mitre_attack_ids = "TA0005:T1562.001"
   })
 }
@@ -420,6 +473,9 @@ query "repository_archived" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Repository"
+  })
 }
 
 detection "repository_collaborator_list_updated" {
@@ -431,6 +487,7 @@ detection "repository_collaborator_list_updated" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Repository",
     mitre_attack_ids = "TA0001:T1195"
   })
 }
@@ -446,6 +503,9 @@ query "repository_collaborator_list_updated" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Repository"
+  })
 }
 
 detection "repository_vulnerability_alert_dismissed" {
@@ -457,6 +517,7 @@ detection "repository_vulnerability_alert_dismissed" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Repository",
     mitre_attack_ids = "TA0010:T1567, TA0005:T1203, TA0005:T1190"
   })
 }
@@ -473,6 +534,9 @@ query "repository_vulnerability_alert_dismissed" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Repository"
+  })
 }
 
 detection "organization_ownership_transferred" {
@@ -484,6 +548,7 @@ detection "organization_ownership_transferred" {
   display_columns = local.audit_log_organization_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1098"
   })
 }
@@ -500,6 +565,9 @@ query "organization_ownership_transferred" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "repository_visibility_set_public" {
@@ -511,6 +579,7 @@ detection "repository_visibility_set_public" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Repository",
     mitre_attack_ids = "TA0001:T1195.002"
   })
 }
@@ -529,6 +598,9 @@ query "repository_visibility_set_public" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Repository"
+  })
 }
 
 detection "personal_access_token_created" {
@@ -540,6 +612,7 @@ detection "personal_access_token_created" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    foldetr          = "GitHub/PersonalAccessToken",
     mitre_attack_ids = "TA0006:T1078.004"
   })
 }
@@ -556,6 +629,9 @@ query "personal_access_token_created" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/PersonalAccessToken"
+  })
 }
 
 detection "organization_user_granted_admin_privilege" {
@@ -567,6 +643,7 @@ detection "organization_user_granted_admin_privilege" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/Organization",
     mitre_attack_ids = "TA0003:T1078.004"
   })
 }
@@ -584,6 +661,9 @@ query "organization_user_granted_admin_privilege" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/Organization"
+  })
 }
 
 detection "user_authentication_failed" {
@@ -595,6 +675,7 @@ detection "user_authentication_failed" {
   display_columns = local.audit_log_detection_display_columns
 
   tags = merge(local.github_audit_log_detections_common_tags, {
+    folder           = "GitHub/User",
     mitre_attack_ids = "TA0006:T1110"
   })
 }
@@ -611,4 +692,7 @@ query "user_authentication_failed" {
     order by
       tp_timestamp desc;
   EOQ
+  tags = merge(local.github_audit_log_detections_common_tags, {
+    folder = "GitHub/User"
+  })
 }
