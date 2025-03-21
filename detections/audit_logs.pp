@@ -1,4 +1,3 @@
-
 benchmark "audit_log_detections" {
   title       = "Audit Log Detections"
   description = "This detection benchmark contains recommendations when scanning Audit logs."
@@ -62,6 +61,7 @@ query "branch_protection_policy_overridden" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Branch"
   })
@@ -93,6 +93,7 @@ query "branch_protection_disabled" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Branch"
   })
@@ -124,6 +125,7 @@ query "organization_saml_disabled" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -155,6 +157,7 @@ query "organization_two_factor_authentication_disabled" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -194,6 +197,7 @@ query "organization_ip_allow_list_updated" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -225,6 +229,7 @@ query "organization_moderator_added" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -256,6 +261,7 @@ query "organization_moderator_removed" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -287,6 +293,7 @@ query "organization_user_added" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -318,6 +325,7 @@ query "organization_user_removed" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -349,6 +357,7 @@ query "organization_application_installed" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -380,6 +389,7 @@ query "organization_application_removed" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -411,6 +421,7 @@ query "organization_oauth_application_authorized" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -442,6 +453,7 @@ query "organization_oauth_application_revoked" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -503,6 +515,7 @@ query "repository_collaborator_list_updated" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Repository"
   })
@@ -534,6 +547,7 @@ query "repository_vulnerability_alert_dismissed" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Repository"
   })
@@ -565,6 +579,7 @@ query "organization_ownership_transferred" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -598,6 +613,7 @@ query "repository_visibility_set_public" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Repository"
   })
@@ -629,6 +645,7 @@ query "personal_access_token_created" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/PersonalAccessToken"
   })
@@ -661,6 +678,7 @@ query "organization_user_granted_admin_privilege" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/Organization"
   })
@@ -692,6 +710,7 @@ query "user_authentication_failed" {
     order by
       tp_timestamp desc;
   EOQ
+
   tags = merge(local.github_audit_log_detections_common_tags, {
     folder = "GitHub/User"
   })

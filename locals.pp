@@ -3,7 +3,7 @@ locals {
   github_audit_log_detections_common_tags = {
     category = "Detections"
     plugin   = "github"
-    service  = "GitHub/AuditLog"
+    service  = "GitHub"
   }
 }
 
@@ -49,26 +49,26 @@ locals {
   # Local internal variables to build the SQL select clause for common
   # dimensions. Do not edit directly.
   detection_sql_resource_column_branch_protection_policy_overridden = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/', additional_fields ->> 'repo', '/commit/', additional_fields ->> 'after')")
+  "concat('https://github.com/', additional_fields ->> 'repo', '/commit/', additional_fields ->> 'after')")
 
   detection_sql_resource_column_branch_protection_disabled = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/', json_extract_string(additional_fields, '$.repo'))")
+  "concat('https://github.com/', additional_fields ->> 'repo'))")
 
   detection_sql_resource_column_organization_authentication_method_updates = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/orgs/', org, '/settings/authentication')")
+  "concat('https://github.com/orgs/', org, '/settings/authentication')")
 
   detection_sql_resource_column_user = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/', actor)")
+  "concat('https://github.com/', actor)")
 
   detection_sql_resource_column_organization = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/orgs/', org)")
+  "concat('https://github.com/orgs/', org)")
 
   detection_sql_resource_column_organization_moderator_updates = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/orgs/', additional_fields ->> 'user')")
+  "concat('https://github.com/orgs/', additional_fields ->> 'user')")
 
   detection_sql_resource_column_repository = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/', additional_fields ->> 'repo')")
+  "concat('https://github.com/', additional_fields ->> 'repo')")
 
   detection_sql_resource_column_repository_vulnerability_alert_dismissed = replace(local.detection_sql_columns, "__RESOURCE_SQL__",
-  "CONCAT('https://github.com/', additional_fields ->> 'repo', '/security/dependabot/', additional_fields ->> 'alert_number')")
+  "concat('https://github.com/', additional_fields ->> 'repo', '/security/dependabot/', additional_fields ->> 'alert_number')")
 }
