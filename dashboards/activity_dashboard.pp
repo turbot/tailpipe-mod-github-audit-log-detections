@@ -149,7 +149,6 @@ query "activity_dashboard_logs_by_source_ip" {
     where
       tp_source_ip is not null
       and tp_source_ip not like '%github.com'
-      and tp_source_ip != 'GitHub Internal'
     group by
       tp_source_ip
     order by
