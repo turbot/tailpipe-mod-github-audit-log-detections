@@ -21,7 +21,7 @@ benchmark "mitre_attack_v161_ta0002_t1059_009" {
   type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0002_t1059_009.md")
   children = [
-    detection.personal_access_token_created,
+    detection.personal_access_token_granted,
     detection.repository_vulnerability_alert_dismissed,
   ]
 

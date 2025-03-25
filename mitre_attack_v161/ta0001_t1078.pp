@@ -24,7 +24,7 @@ benchmark "mitre_attack_v161_ta0001_t1078_001" {
     detection.organization_application_installed,
     detection.organization_moderator_added,
     detection.organization_user_added,
-    detection.personal_access_token_created,
+    detection.personal_access_token_granted,
 
   ]
 
@@ -38,10 +38,8 @@ benchmark "mitre_attack_v161_ta0001_t1078_004" {
   type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0001_t1078_004.md")
   children = [
-    detection.organization_oauth_application_authorized,
-    detection.organization_oauth_application_revoked,
     detection.organization_two_factor_authentication_disabled,
-    detection.personal_access_token_created,
+    detection.personal_access_token_granted,
   ]
 
   tags = merge(local.mitre_attack_v161_ta0001_t1078_common_tags, {

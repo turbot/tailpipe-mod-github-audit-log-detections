@@ -10,9 +10,7 @@ benchmark "mitre_attack_v161_ta0001_t1199" {
   documentation = file("./mitre_attack_v161/docs/ta0001_t1199.md")
   children = [
     detection.organization_application_installed,
-    detection.organization_oauth_application_authorized,
-    detection.organization_oauth_application_revoked,
-    detection.repository_collaborator_list_updated,
+    detection.repository_member_updated,
   ]
 
   tags = local.mitre_attack_v161_ta0001_t1199_common_tags

@@ -22,7 +22,7 @@ benchmark "mitre_attack_v161_ta0003_t1136_003" {
   children = [
     detection.organization_moderator_added,
     detection.organization_user_added,
-    detection.repository_collaborator_list_updated,
+    detection.repository_member_updated,
   ]
 
   tags = merge(local.mitre_attack_v161_ta0003_common_tags, {

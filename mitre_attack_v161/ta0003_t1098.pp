@@ -21,9 +21,7 @@ benchmark "mitre_attack_v161_ta0003_t1098_001" {
   type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0003_t1098_001.md")
   children = [
-    detection.organization_oauth_application_authorized,
-    detection.organization_oauth_application_revoked,
-    detection.personal_access_token_created,
+    detection.personal_access_token_granted,
   ]
 
   tags = local.mitre_attack_v161_ta0003_t1098_common_tags
@@ -34,7 +32,7 @@ benchmark "mitre_attack_v161_ta0003_t1098_003" {
   type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0003_t1098_003.md")
   children = [
-    detection.organization_user_granted_admin_privilege,
+    detection.organization_user_granted_owner_role,
   ]
 
   tags = local.mitre_attack_v161_ta0003_t1098_common_tags

@@ -5,12 +5,12 @@ mod "github_audit_log_detections" {
   color         = "#191717"
   documentation = file("./docs/index.md")
   icon          = "/images/mods/turbot/github-audit-log-detections.svg"
-  categories    = ["dashboard", "detections", "github"]
+  categories    = ["dashboard", "detections", "github", "software development"]
   database      = var.database
 
   opengraph {
     title       = "Powerpipe Mod for GitHub Audit Log Detections"
-    description = "Run detections and view dashboards for your GitHub audit logs to monitor and analyze activity across your GitHub organizations and repositories Powerpipe and Tailpipe."
+    description = "Run detections and view dashboards for your GitHub audit logs to monitor and analyze activity across your GitHub organizations and repositories using Powerpipe and Tailpipe."
     image       = "/images/mods/turbot/github-audit-log-detections-social-graphic.png"
   }
 }

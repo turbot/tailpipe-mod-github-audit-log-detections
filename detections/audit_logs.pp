@@ -7,7 +7,6 @@ benchmark "audit_log_detections" {
     benchmark.organization_detections,
     benchmark.personal_access_token_detections,
     benchmark.repository_detections,
-    benchmark.user_detections,
   ]
 
   tags = merge(local.github_audit_log_detections_common_tags, {

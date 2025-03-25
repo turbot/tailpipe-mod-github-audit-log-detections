@@ -21,7 +21,7 @@ benchmark "mitre_attack_v161_ta0004_t1548_005" {
   type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0004_t1548_005.md")
   children = [
-    detection.organization_user_granted_admin_privilege,
+    detection.organization_user_granted_owner_role,
   ]
 
   tags = merge(local.mitre_attack_v161_ta0004_t1548_common_tags, {

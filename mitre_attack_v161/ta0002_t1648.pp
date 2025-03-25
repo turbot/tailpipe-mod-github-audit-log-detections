@@ -10,7 +10,7 @@ benchmark "mitre_attack_v161_ta0002_t1648" {
   documentation = file("./mitre_attack_v161/docs/ta0002_t1648.md")
   children = [
     detection.organization_application_installed,
-    detection.personal_access_token_created,
+    detection.personal_access_token_granted,
     detection.repository_vulnerability_alert_dismissed,
   ]
 

@@ -9,8 +9,7 @@ benchmark "mitre_attack_v161_ta0010_t1484" {
   type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0010_t1484.md")
   children = [
-    detection.organization_ip_allow_list_updated,
-    detection.organization_saml_disabled,
+    detection.organization_ip_allow_list_entry_updated,
     detection.organization_two_factor_authentication_disabled,
   ]
 

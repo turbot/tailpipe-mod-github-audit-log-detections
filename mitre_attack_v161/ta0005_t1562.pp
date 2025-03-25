@@ -20,7 +20,6 @@ benchmark "mitre_attack_v161_ta0005_t1562_001" {
   type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0005_t1562_001.md")
   children = [
-    detection.organization_saml_disabled,
     detection.organization_two_factor_authentication_disabled,
   ]
 

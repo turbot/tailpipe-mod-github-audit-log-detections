@@ -9,8 +9,7 @@ benchmark "mitre_attack_v161_ta0009_t1119" {
   type          = "detection"
   documentation = file("./mitre_attack_v161/docs/ta0009_t1119.md")
   children = [
-    detection.personal_access_token_created,
-    detection.organization_oauth_application_authorized,
+    detection.personal_access_token_granted,
   ]
 
   tags = local.mitre_attack_v161_ta0009_t1119_common_tags
