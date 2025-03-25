@@ -65,10 +65,8 @@ powerpipe benchmark list
 
 Run a benchmark:
 
-**TODO**: Update this to MITRE benchmark once added
-
 ```sh
-powerpipe benchmark run github_audit_log_detections.benchmark.audit_log_detections
+powerpipe benchmark run github_audit_log_detections.benchmark.mitre_attack_v161
 ```
 
 Different output formats are also available, for more information please see
