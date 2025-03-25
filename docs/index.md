@@ -28,7 +28,7 @@ brew install turbot/tap/powerpipe
 sudo /bin/sh -c "$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)"
 ```
 
-This mod also requires GitHub Audit logs to be collected using [Tailpipe](https://tailpipe.io) with the [GitHub plugin](https://hub.tailpipe.io/plugins/turbot/github):
+This mod also requires GitHub audit logs to be collected using [Tailpipe](https://tailpipe.io) with the [GitHub plugin](https://hub.tailpipe.io/plugins/turbot/github):
 - [Get started with the GitHub plugin for Tailpipe →](https://hub.tailpipe.io/plugins/turbot/github#getting-started)
 
 Install the mod:

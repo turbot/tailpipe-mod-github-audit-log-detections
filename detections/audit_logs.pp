@@ -1,6 +1,6 @@
 benchmark "audit_log_detections" {
   title       = "Audit Log Detections"
-  description = "This detection benchmark contains recommendations when scanning Audit logs."
+  description = "This detection benchmark contains recommendations when scanning audit logs."
   type        = "detection"
   children = [
     benchmark.branch_detections,
